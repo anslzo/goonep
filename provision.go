@@ -7,7 +7,6 @@ import (
     "log"
     "strings"
     "io/ioutil"
-    "regexp"
     "time"
 )
 
@@ -77,17 +76,16 @@ func (m *ProvModel) Parse( RawData string ) {
 
     m.RawData = RawData
 
-    extraFieldFetcher := regexp.MustCompile( "([a-zA-Z0-9]+,){2}" )
-    m.ExtraField = strings.Trim( extraFieldFetcher.ReplaceAllString( RawData, ""), "\"" )
-
-    efSlices := strings.Split(RawData, "," )
+    efSlices := strings.SplitN(RawData, ",", 3)
 
     if len(efSlices) <= 2 {
         return
     }
 
+
     m.ActiveStatus = efSlices[0]
     m.Rid = efSlices[1]
+    m.ExtraField = strings.Trim( efSlices[2], "\"" )
 
 }
 
