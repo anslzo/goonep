@@ -79,9 +79,9 @@ func (d Pdevice) Validate() bool{
 }
 
 // Meta from the meta field in devices' description information
-func (d *Pdevice) GetMeta() DeviceMeta {
+func (d *Pdevice) GetMeta() map[string]interface{} {
 
-   meta := DeviceMeta{}
+   var meta map[string]interface{}
 
    err := json.Unmarshal( []byte( d.Description.Meta ) , &meta )
 
@@ -94,7 +94,7 @@ func (d *Pdevice) GetMeta() DeviceMeta {
 }
 
 // Set meta for device
-func (d *Pdevice) SetMeta(meta DeviceMeta) *Pdevice {
+func (d *Pdevice) SetMeta(meta map[string]interface{}) *Pdevice {
 
    metaString, err := json.Marshal( meta )
 
